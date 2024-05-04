@@ -4,7 +4,11 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     user_id = params[:user_id]
-    @posts = Post.where(user_id: user_id).paginate(page: params[:page], per_page: 2)
+    page = params[:page] || 1
+    per_page = params[:per_page] || 10
+
+    @posts = Post.where(user_id: user_id)
+                 .paginate(page: page, per_page: per_page)
   end
 
   # GET /posts/1 or /posts/1.json

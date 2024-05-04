@@ -11,6 +11,10 @@
     <%= label_tag :page, "Page" %>
     <%= number_field_tag :page, params[:page], class: "form-control" %>
   </div>
+  <div class="form-group">
+    <%= label_tag :per_page, "Posts per Page" %>
+    <%= number_field_tag :per_page, params[:per_page], class: "form-control" %>
+  </div>
   <%= submit_tag "Filter", class: "btn btn-primary" %>
 <% end %>
 
