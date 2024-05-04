@@ -1,19 +1,40 @@
-<p id="notice"><%= notice %></p>
+<style>
+  .post {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+  .post strong {
+    color: #333;
+  }
 
-<p>
-  <strong>Body:</strong>
-  <%= @post.body %>
-</p>
+  .post p {
+    margin: 5px 0;
+  }
 
-<p>
-  <strong>User:</strong>
-  <%= @post.user %>
-</p>
+  .edit-link,
+  .back-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 5px;
+  }
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+  .edit-link:hover,
+  .back-link:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="post">
+  <p><strong>Title:</strong> <%= @post.title %></p>
+  <p><strong>Body:</strong> <%= @post.body %></p>
+  <p><strong>User:</strong> <%= @post.user.username %></p>
+  <%= link_to 'Edit', edit_post_path(@post), class: 'edit-link' %>
+  <%= link_to 'Back', posts_path, class: 'back-link' %>
+</div>

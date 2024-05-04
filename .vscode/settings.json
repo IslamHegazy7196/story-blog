@@ -1,0 +1,15 @@
+{
+    "ruby.lint": {
+        "reek": {
+            "useBundler": true // enable reek via bundler
+        },
+        "rubocop": true
+    },
+    "ruby.rubocop.onSave": true,
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.erb": "erb",
+        "*.html.erb": "erb"
+    },
+    "ruby.format": "rubocop",
+}

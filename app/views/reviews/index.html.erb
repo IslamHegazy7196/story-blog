@@ -1,6 +1,121 @@
+<style>
+  #notice {
+    color: red;
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #ddd;
+  }
+
+  tr:nth-child(even):hover {
+    background-color: #ddd;
+  }
+
+  a {
+    color: blue;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .pagination a, .pagination span {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    margin: 0 2px;
+    cursor: pointer;
+  }
+
+  .pagination .disabled {
+    color: #999999;
+    cursor: default;
+  }
+
+  .pagination .current {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+  }
+  .reviews-filter-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page-input {
+  width: 70px; /* adjust as needed */
+}
+
+.per-page-input {
+  width: 100px; /* adjust as needed */
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+</style>
+
 <p id="notice"><%= notice %></p>
 
+
 <h1>Reviews</h1>
+<%= form_tag reviews_path, method: :get, class: "reviews-filter-form" do %>
+  <div class="form-group">
+    <%= label_tag :page, "Page", class: "form-label" %>
+    <%= number_field_tag :page, params[:page], class: "form-control page-input" %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :per_page, "Reviews per Page", class: "form-label" %>
+    <%= number_field_tag :per_page, params[:per_page], class: "form-control per-page-input" %>
+  </div>
+  <%= submit_tag "Filter", class: "btn btn-primary filter-btn" %>
+<% end %>
+
 
 <table>
   <thead>
@@ -29,5 +144,5 @@
 </table>
 
 <br>
-
+<%= will_paginate @reviews %>
 <%= link_to 'New Review', new_review_path %>

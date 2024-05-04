@@ -8,7 +8,9 @@
 # db/seeds.rb
 require 'faker'
 # db/seeds.rb
+# db/seeds.rb
 
+# Generate users
 50.times do |n|
   User.create!(username: "user#{n + 1}")
 end

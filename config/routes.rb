@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   resources :reviews
-  resources :posts
+  resources :posts do
+    collection do
+      get 'top', to: 'posts#top'
+    end
+  end
   resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'home#index'
+
+  # Set root path to the 'top' action of the 'posts' controller
+  root 'posts#top'
 end
