@@ -1,7 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[show edit update destroy]
 
-  # GET /reviews or /reviews.json
   def index
     page = params[:page] || 1
     per_page = params[:per_page] || 10
@@ -9,18 +8,14 @@ class ReviewsController < ApplicationController
     @reviews = Review.all.paginate(page: page, per_page: per_page)
   end
 
-  # GET /reviews/1 or /reviews/1.json
   def show; end
 
-  # GET /reviews/new
   def new
     @review = Review.new
   end
 
-  # GET /reviews/1/edit
   def edit; end
 
-  # POST /reviews or /reviews.json
   def create
     @review = Review.new(review_params)
 
@@ -35,7 +30,6 @@ class ReviewsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
     respond_to do |format|
       if @review.update(review_params)
@@ -48,7 +42,6 @@ class ReviewsController < ApplicationController
     end
   end
 
-  # DELETE /reviews/1 or /reviews/1.json
   def destroy
     @review.destroy
 
@@ -60,12 +53,10 @@ class ReviewsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_review
     @review = Review.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def review_params
     params.require(:review).permit(:rating, :comment, :user_id, :post_id)
   end
