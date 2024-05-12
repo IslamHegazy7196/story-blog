@@ -15,23 +15,36 @@ class ReviewsController < ApplicationController
   end
 
   def edit; end
-
+    
   def create
-    @review = Review.new(review_params)
+    # impelement database transaction to ensure multiple user can add review at the same time and use concurrency control in the commented section
+    ActiveRecord::Base.transaction do
+      @review = Review.new(review_params)
 
-    respond_to do |format|
-      if @review.save
-        format.html { redirect_to review_url(@review), notice: 'Review was successfully created.' }
-        format.json { render :show, status: :created, location: @review }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @review.save
+          format.html { redirect_to review_url(@review), notice: 'Review was successfully created.' }
+          format.json { render :show, status: :created, location: @review }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @review.errors, status: :unprocessable_entity }
+          raise ActiveRecord::Rollback
+        end
       end
     end
-    # if @review.save
-    #   render json: ReviewSerializer.new(@review).serialized_json, status: :created
-    # else
-    #   render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
+    # ActiveRecord::Base.transaction do
+    #   @review = Review.new(review_params)
+
+    #   begin
+    #     @review.save!
+    #     render json: ReviewSerializer.new(@review).serialized_json, status: :created
+    #   rescue ActiveRecord::RecordNotUnique => e
+    #     render json: { errors: ["Another review was created for this post. Please try again."] }, status: :conflict
+    #     raise ActiveRecord::Rollback
+    #   rescue ActiveRecord::RecordInvalid => e
+    #     render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
+    #     raise ActiveRecord::Rollback
+    #   end
     # end
   end
 
