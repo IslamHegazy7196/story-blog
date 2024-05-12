@@ -28,6 +28,11 @@ class ReviewsController < ApplicationController
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
+    # if @review.save
+    #   render json: ReviewSerializer.new(@review).serialized_json, status: :created
+    # else
+    #   render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
+    # end
   end
 
   def update

@@ -7,28 +7,34 @@ class PostsController < ApplicationController
 
     @posts = Post.all.paginate(page: page, per_page: per_page)
   end
-
+  
   def top
     page = params[:page] || 1
     per_page = params[:per_page] || 10
     @top_posts = Post.order('average_rating DESC').paginate(page: page, per_page: per_page)
+    # render json: PostSerializer.new(@top_posts).serialized_json
   end
-
+  
   def show
     @post = Post.find(params[:id])
   end
-
+  
   def new
     @post = Post.new
   end
-
+  
   def edit
     @post = Post.find(params[:id])
   end
-
+  
   def create
     @post = Post.new(post_params)
-
+    
+    # if @post.save
+    #   render json: PostSerializer.new(@post).serialized_json, status: :created
+    # else
+    #   render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
+    # end
     respond_to do |format|
       if @post.save
         format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }

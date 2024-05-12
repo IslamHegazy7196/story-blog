@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     per_page = params[:per_page] || 10
 
     @posts = Post.where(user_id: user_id).order(created_at: :desc).paginate(page: page, per_page: per_page)
+    # render json: PostSerializer.new(@posts).serialized_json
   end
 
   def new
